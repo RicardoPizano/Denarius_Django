@@ -16,6 +16,7 @@ class Category(models.Model):
     register_date = models.DateField(_('Fecha de registro'), auto_now_add=True)
     delete_date = models.DateField(_('Fecha de eliminación'), blank=True, null=True)
     is_active = models.BooleanField(_('Es activa'), default=True)
+    category_color = models.CharField(_('Color'), max_length=10, default='#216c2a')
 
 
 class Account(models.Model):

@@ -33,7 +33,8 @@ def view_all_categories(request):
             'description': category.description,
             'register_date': category.register_date,
             'delete_date': category.delete_date,
-            'is_active': category.is_active
+            'is_active': category.is_active,
+            'category_color': category.category_color
         })
 
     if response:
@@ -61,6 +62,7 @@ def view_user_categories(request, user_id):
                 'id': category.pk,
                 'name': category.name,
                 'description': category.description,
+                'category_color': category.category_color
             })
 
         if response:
@@ -88,6 +90,7 @@ def view_single_category(request, category_id):
                 'id': category.pk,
                 'name': category.name,
                 'description': category.description,
+                'category_color': category.category_color
             }
 
             return Response({'category': response}, status=status.HTTP_200_OK)
@@ -113,8 +116,9 @@ def register_category(request):
             user = User.objects.get(pk=request.data['user_id'])
             name = request.data['name']
             description = request.data['description']
+            color = request.data['color']
 
-            Category.objects.create(user=user, name=name, description=description)
+            Category.objects.create(user=user, name=name, description=description, category_color=color)
 
             return Response(status=status.HTTP_200_OK)
         except User.DoesNotExist:
@@ -139,10 +143,11 @@ def update_category(request):
             category = Category.objects.get(pk=request.data['category_id'])
             name = request.data['name']
             description = request.data['description']
+            color = request.data['color']
 
             category.name = name
             category.description = description
-
+            category.category_color = color
             category.save()
 
             return Response(status=status.HTTP_200_OK)
